@@ -2,20 +2,18 @@
 
 use App\Controllers\BaseController;
 use App\Services\UsersService;
+use DI\Bridge\Slim\Bridge;
 use DI\Container;
-use Psr\Container\ContainerInterface;
-use Slim\Factory\AppFactory;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $container = new Container();
 
-AppFactory::setContainer($container);
-$app = AppFactory::create();
-
-$container->set('UsersService', function (ContainerInterface $container) {
-    return (new UsersService());
+$container->set('UsersService', function () {
+    return new UsersService();
 });
+
+$app = Bridge::create($container);
 
 $app->addErrorMiddleware(true, true, true);
 

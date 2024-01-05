@@ -7,7 +7,13 @@ use Uru\BitrixModels\Models\UserModel;
 class User extends UserModel
 {
     protected static string $objectClass = BaseModel::class;
-    public function getName()
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
     {
         return $this['NAME'];
     }

@@ -19,7 +19,7 @@ class BaseController extends ApiController
         $this->container = $container;
     }
 
-    public function index(Request $request, Response $response): Response
+    public function index(Response $response): Response
     {
         $response->getBody()->write('<a href="/user/1">User info</a>');
 
@@ -30,13 +30,15 @@ class BaseController extends ApiController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function getUser(Request $request, Response $response, $args): Response
+    public function getUser(int $id, Request $request, Response $response): Response
     {
-        $id = $args['id'];
         /** @var UsersService $usersService */
         $usersService = $this->container->has('UsersService') ? $this->container->get('UsersService') : null;
         $user = $usersService->createUser($id)->getUser();
 
-        return $this->withJson($request, $response, ['name' => $user->getName()])->withStatus(200);
+        return $this->withJson($request, $response, [
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+        ])->withStatus(200);
     }
 }
