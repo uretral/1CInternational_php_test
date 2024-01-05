@@ -3,6 +3,7 @@
   "description": "test case for php",
   "license": "proprietary",
   "require": {
+    "php": "^7.4",
     "slim/slim": "^4.0",
     "slim/psr7": "^1.6",
     "uru/digital-river-models": "^1.0",
