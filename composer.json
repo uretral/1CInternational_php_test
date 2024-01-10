@@ -3,7 +3,7 @@
   "description": "test case for php",
   "license": "proprietary",
   "require": {
-    "php": "^7.4",
+    "php": "^8.1",
     "slim/slim": "^4.0",
     "slim/psr7": "^1.6",
     "uru/digital-river-models": "^1.0",
@@ -15,7 +15,7 @@
     "friendsofphp/php-cs-fixer": "^3.46"
   },
   "scripts": {
-    "run": "php -S localhost:8000 -t public",
+    "server": "php -S localhost:8000 -t public",
     "fix": "vendor/bin/php-cs-fixer fix src --verbose --allow-risky=yes"
   },
   "autoload": {
