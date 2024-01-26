@@ -22,7 +22,7 @@ class UsersService
 
     public function createUser($id): self
     {
-        $user = new User($id, ['NAME' => 'John Doe']);
+        $user = new User($id, ['NAME' => 'John Doe', 'REG_DATE' => (new \DateTime())->format('Y-m-d H:i:s')]);
 
         return $this->setUser($user);
     }
