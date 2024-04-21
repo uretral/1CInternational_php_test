@@ -21,4 +21,5 @@ $app->get('/', [BaseController::class, 'index']);
 
 $app->get('/user/{id}', [BaseController::class, 'getUser']);
 
+
 $app->run();
