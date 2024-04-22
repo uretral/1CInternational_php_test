@@ -11,13 +11,17 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use Uru\SlimApiController\ApiController;
 
-class UserController extends ApiController
+
+class UserController
 {
 
     private ContainerInterface $container;
 
+    /**
+     * no more ApiController extension
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -37,7 +41,7 @@ class UserController extends ApiController
     {
         return $this->container->has(UserInterface::class)
             ? $this->container->get(UserInterface::class)
-            : $this->respondWithError($request, $response, 'Service unavailable', 503);
+            : $response->withError('Service unavailable', 503);
     }
 
     /**
@@ -52,7 +56,7 @@ class UserController extends ApiController
     public function getUsers(Request $request, Response $response): ResponseInterface
     {
         $usersListService = $this->usersListService($request, $response);
-        return $this->withJson($request, $response, $usersListService->getUsers())->withStatus(200);
+        return $response->withJson($usersListService->getUsers())->withStatus(200);
     }
 
     /**
@@ -91,8 +95,8 @@ class UserController extends ApiController
     public function getCollection(Request $request, Response $response, Collection $collection): ResponseInterface
     {
         return $collection->count()
-            ? $this->withJson($request, $response, $collection)->withStatus(200)
-            : $this->respondWithError($request, $response, 'There is no one user yet');
+            ? $response->withJson($collection)->withStatus(200)
+            : $response->withError('There is no one user yet');
     }
 
     /**
@@ -105,11 +109,12 @@ class UserController extends ApiController
     public function getCollectionItemByID(Request $request, Response $response, Collection $collection, int $id): ResponseInterface
     {
         if ($item = $collection->where('id', $id)->first()) {
-            return $this->withJson($request, $response, $item)->withStatus(200);
+            return $response->withJson($item)->withStatus(200);
         }
 
-        return $this->errorWrongArgs($request, $response,
-            "User with ID {$id} not found, only {$collection->pluck('id')->toJson()} ID`s are available");
+        return $response->withError(
+            "User with ID {$id} not found, only {$collection->pluck('id')->toJson()} ID`s are available"
+        );
     }
 
     /**
@@ -121,10 +126,10 @@ class UserController extends ApiController
     public function getCollectionItemByRegDate(Request $request, Response $response, Collection $collection): ResponseInterface
     {
         if ($item = $collection->sortByDesc('REG_DATE')->first()) {
-            return $this->withJson($request, $response, $item)->withStatus(200);
+            return $response->withJson($item)->withStatus(200);
         }
 
-        return $this->respondWithError($request, $response, 'There is no one user yet');
+        return $response->withError('There is no one user yet');
     }
 
 }
