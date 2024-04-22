@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use App\Controllers\UserController;
+use App\Middleware\XApiKeyMiddleware;
 use DI\Container;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -18,7 +19,6 @@ $app->get('/user/{id}', [BaseController::class, 'getUser']);
 
 $app->get('/users-list', [UserController::class, 'getUsers']);
 
-$app->get('/users[/{idOrLast}]', UserController::class);
-
+$app->get('/users[/{idOrLast}]', UserController::class)->add(new XApiKeyMiddleware());
 
 $app->run();

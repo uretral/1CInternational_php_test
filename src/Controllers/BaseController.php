@@ -6,6 +6,7 @@ use App\Services\UsersService;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Uru\SlimApiController\ApiController;
@@ -19,7 +20,7 @@ class BaseController extends ApiController
         $this->container = $container;
     }
 
-    public function index(Response $response): Response
+    public function index(Response $response): ResponseInterface
     {
         $response->getBody()->write('<a href="/user/1">User info</a>');
 
@@ -30,7 +31,7 @@ class BaseController extends ApiController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function getUser(int $id, Request $request, Response $response): Response
+    public function getUser(int $id, Request $request, Response $response): ResponseInterface
     {
         /** @var UsersService $usersService */
         $usersService = $this->container->has('UsersService') ? $this->container->get('UsersService') : null;
