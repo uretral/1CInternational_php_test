@@ -1,8 +1,6 @@
 <?php
 
 use App\Controllers\BaseController;
-use App\Services\UsersService;
-use DI\Bridge\Slim\Bridge;
 use DI\Container;
 
 require __DIR__.'/../vendor/autoload.php';

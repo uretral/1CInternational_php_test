@@ -37,6 +37,8 @@ class UserController extends ApiController
 
 
     /**
+     * #3 - create controller with service(#2) through DI
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
