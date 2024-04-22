@@ -23,7 +23,11 @@ class UserController extends ApiController
         $this->container = $container;
     }
 
+
     /**
+     * @param Request $request
+     * @param Response $response
+     * @return ResponseInterface|UsersListService
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -34,10 +38,12 @@ class UserController extends ApiController
             : $this->respondWithError($request, $response, 'Service unavailable', 503);
     }
 
-
     /**
      * #3 - create controller with service(#2) through DI
      *
+     * @param Request $request
+     * @param Response $response
+     * @return ResponseInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -48,12 +54,16 @@ class UserController extends ApiController
     }
 
     /**
-     * #4 - add new optional route with three methods
+     *  #4 - add new optional route with three methods
      *
+     * @param Request $request
+     * @param Response $response
+     * @param mixed|null $idOrLast
+     * @return ResponseInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(Request $request, Response $response, mixed $idOrLast = null)
+    public function __invoke(Request $request, Response $response, mixed $idOrLast = null): ResponseInterface
     {
         $usersListService = $this->usersListService($request, $response);
 
@@ -68,19 +78,51 @@ class UserController extends ApiController
             });
     }
 
+    /**
+     * #5 - add error handling
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param Collection $collection
+     * @return ResponseInterface
+     */
     public function getCollection(Request $request, Response $response, Collection $collection): ResponseInterface
     {
-        return $this->withJson($request, $response, $collection)->withStatus(200);
+        return $collection->count()
+            ? $this->withJson($request, $response, $collection)->withStatus(200)
+            : $this->respondWithError($request, $response, 'There is no one user yet');
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param Collection $collection
+     * @param int $id
+     * @return ResponseInterface
+     */
     public function getCollectionItemByID(Request $request, Response $response, Collection $collection, int $id): ResponseInterface
     {
-        return $this->withJson($request, $response, $collection->where('id', $id)->first())->withStatus(200);
+        if ($item = $collection->where('id', $id)->first()) {
+            return $this->withJson($request, $response, $item)->withStatus(200);
+        }
+
+        return $this->errorWrongArgs($request, $response,
+            "User with ID {$id} not found, only {$collection->pluck('id')->toJson()} ID`s are available");
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param Collection $collection
+     * @return ResponseInterface
+     */
     public function getCollectionItemByRegDate(Request $request, Response $response, Collection $collection): ResponseInterface
     {
-        return $this->withJson($request, $response, $collection->sortByDesc('REG_DATE')->first())->withStatus(200);
+        if ($item = $collection->sortByDesc('REG_DATE')->first()) {
+            return $this->withJson($request, $response, $item)->withStatus(200);
+        }
+
+        return $this->respondWithError($request, $response, 'There is no one user yet');
     }
 
 }
