@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\UserInterface;
 use App\Services\UsersListService;
 use Illuminate\Support\Collection;
 use Psr\Container\ContainerExceptionInterface;
@@ -16,7 +17,6 @@ class UserController extends ApiController
 {
 
     private ContainerInterface $container;
-    private string $serviceName = 'UsersListService';
 
     public function __construct(ContainerInterface $container)
     {
@@ -25,6 +25,8 @@ class UserController extends ApiController
 
 
     /**
+     * #6 - Change  DI for services, bind by interface
+     *
      * @param Request $request
      * @param Response $response
      * @return ResponseInterface|UsersListService
@@ -33,8 +35,8 @@ class UserController extends ApiController
      */
     public function usersListService(Request $request, Response $response): ResponseInterface|UsersListService
     {
-        return $this->container->has($this->serviceName)
-            ? $this->container->get($this->serviceName)
+        return $this->container->has(UserInterface::class)
+            ? $this->container->get(UserInterface::class)
             : $this->respondWithError($request, $response, 'Service unavailable', 503);
     }
 
