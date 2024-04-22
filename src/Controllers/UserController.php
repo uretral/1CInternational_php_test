@@ -28,11 +28,9 @@ class UserController extends ApiController
      */
     public function usersListService(Request $request, Response $response): ResponseInterface|UsersListService
     {
-        if ($this->container->has($this->serviceName)) {
-            return $this->container->get($this->serviceName);
-        } else {
-            return $this->respondWithError($request, $response, 'Service unavailable',503);
-        }
+        return $this->container->has($this->serviceName)
+            ? $this->container->get($this->serviceName)
+            : $this->respondWithError($request, $response, 'Service unavailable', 503);
     }
 
 
