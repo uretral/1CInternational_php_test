@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "26d0f43f-6296-41ec-ad95-801e97cc2047",
+		"name": "1_c API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10528009",
+		"_collection_link": "https://crimson-rocket-4856.postman.co/workspace/colife~2ae6c345-8116-4fd4-a91f-ff20f25ce32e/collection/10528009-26d0f43f-6296-41ec-ad95-801e97cc2047?action=share&source=collection_link&creator=10528009"
+	},
+	"item": [
+		{
+			"name": "User info",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User #1 info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User #2 info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User #3 info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Last registered user info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/last",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"last"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Not Found",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"100"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "XHeader not present",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-api-key",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/users/100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"100"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
